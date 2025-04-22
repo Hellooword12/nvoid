@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatNvoid - Условия использования</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+        }
+        .terms-section {
+            counter-reset: section;
+        }
+        .terms-item h3:before {
+            counter-increment: section;
+            content: counter(section) ". ";
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+<!-- Навигация -->
+<div th:insert="~{fragments/header :: header}"></div>
+
+<!-- Основной контент -->
+<main>
+    <!-- Герой-секция -->
+    <section class="hero-section text-white py-20">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Условия использования</h1>
+            <p class="text-xl mb-8 opacity-90">Пожалуйста, внимательно ознакомьтесь с условиями перед использованием сервиса</p>
+        </div>
+    </section>
+
+    <!-- Условия -->
+    <section class="py-20 bg-white terms-section">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg text-gray-600 max-w-none">
+                <p class="lead">Добро пожаловать в ChatNvoid! Используя наш сервис, вы соглашаетесь с этими условиями. Если вы не согласны, пожалуйста, не используйте наш сервис.</p>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Общие положения</h3>
+                    <p>ChatNvoid предоставляет платформу для обмена сообщениями и файлами между пользователями. Сервис доступен для лиц старше 13 лет (или соответствующего возраста согласия в вашей стране).</p>
+                </div>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Обязанности пользователей</h3>
+                    <p>Вы соглашаетесь:</p>
+                    <ul>
+                        <li>Предоставлять точную и актуальную информацию</li>
+                        <li>Не передавать свою учетную запись другим лицам</li>
+                        <li>Не использовать сервис для незаконной деятельности</li>
+                        <li>Не нарушать права интеллектуальной собственности</li>
+                        <li>Не распространять вредоносное ПО или спам</li>
+                        <li>Не пытаться обойти ограничения сервиса</li>
+                    </ul>
+                </div>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Контент пользователей</h3>
+                    <p>Вы сохраняете права на контент, который создаете и делитесь через ChatNvoid. Однако, загружая контент, вы предоставляете нам лицензию на его хранение и передачу другим пользователям в соответствии с функционалом сервиса.</p>
+                    <p>Мы оставляем за собой право удалять контент, который нарушает наши правила или применимые законы.</p>
+                </div>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Ограничения ответственности</h3>
+                    <p>ChatNvoid предоставляется "как есть". Мы не гарантируем:</p>
+                    <ul>
+                        <li>Бесперебойную работу сервиса</li>
+                        <li>Отсутствие ошибок или вирусов</li>
+                        <li>Точность или полезность контента</li>
+                    </ul>
+                    <p>Мы не несем ответственности за:</p>
+                    <ul>
+                        <li>Косвенные убытки или упущенную выгоду</li>
+                        <li>Действия других пользователей</li>
+                        <li>Контент, созданный пользователями</li>
+                    </ul>
+                </div>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Платные услуги</h3>
+                    <p>Некоторые функции ChatNvoid могут быть платными. Для них действуют дополнительные условия, включая:</p>
+                    <ul>
+                        <li>Стоимость и условия оплаты</li>
+                        <li>Автопродление подписок</li>
+                        <li>Условия возврата</li>
+                    </ul>
+                    <p>Платные услуги могут быть изменены с уведомлением пользователей.</p>
+                </div>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Прекращение доступа</h3>
+                    <p>Мы оставляем за собой право приостановить или прекратить ваш доступ к сервису без предварительного уведомления в случае:</p>
+                    <ul>
+                        <li>Нарушения этих условий</li>
+                        <li>Незаконной деятельности</li>
+                        <li>Создания риска или возможного юридического ущерба</li>
+                    </ul>
+                </div>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Изменения условий</h3>
+                    <p>Мы можем обновлять эти условия. Продолжение использования сервиса после изменений означает ваше согласие с новыми условиями.</p>
+                </div>
+
+                <div class="terms-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Применимое право</h3>
+                    <p>Эти условия регулируются законами Российской Федерации. Любые споры подлежат разрешению в судах по месту нахождения ChatNvoid.</p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Контакты</h3>
+                    <p>По вопросам, связанным с условиями использования, обращайтесь:</p>
+                    <p class="mt-2"><strong>Email:</strong> legal@chatnvoid.com</p>
+                    <p><strong>Почтовый адрес:</strong> г. Москва, ул. Примерная, 123, юридический отдел</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

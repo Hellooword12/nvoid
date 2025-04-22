@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatNvoid - Политика конфиденциальности</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+        }
+        .policy-section {
+            counter-reset: section;
+        }
+        .policy-item h3:before {
+            counter-increment: section;
+            content: counter(section) ". ";
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+<!-- Навигация -->
+<div th:insert="~{fragments/header :: header}"></div>
+
+<!-- Основной контент -->
+<main>
+    <!-- Герой-секция -->
+    <section class="hero-section text-white py-20">
+        <div class="max-w-4xl mx-auto text-center px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Политика конфиденциальности</h1>
+            <p class="text-xl mb-8 opacity-90">Последнее обновление: 1 января 2023 года</p>
+        </div>
+    </section>
+
+    <!-- Политика -->
+    <section class="py-20 bg-white policy-section">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-lg text-gray-600 max-w-none">
+                <p class="lead">ChatNvoid серьезно относится к защите вашей конфиденциальности. В этом документе описаны наши правила сбора, использования и раскрытия вашей информации.</p>
+
+                <div class="policy-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Какие данные мы собираем</h3>
+                    <p>Мы собираем следующие типы информации:</p>
+                    <ul>
+                        <li>Основные данные учетной записи (имя, адрес электронной почты)</li>
+                        <li>Данные профиля (аватар, статус, настройки)</li>
+                        <li>Метаданные сообщений (время отправки, получатели)</li>
+                        <li>Технические данные (IP-адрес, тип устройства, версия ОС)</li>
+                        <li>Данные использования (время активности, функции, которыми вы пользуетесь)</li>
+                    </ul>
+                </div>
+
+                <div class="policy-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Как мы используем ваши данные</h3>
+                    <p>Мы используем собранную информацию для:</p>
+                    <ul>
+                        <li>Предоставления и улучшения наших услуг</li>
+                        <li>Персонализации вашего опыта</li>
+                        <li>Обеспечения безопасности и предотвращения мошенничества</li>
+                        <li>Соблюдения юридических обязательств</li>
+                        <li>Коммуникации с вами</li>
+                    </ul>
+                </div>
+
+                <div class="policy-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Защита данных</h3>
+                    <p>Мы применяем следующие меры безопасности:</p>
+                    <ul>
+                        <li>Шифрование данных при передаче (TLS)</li>
+                        <li>Шифрование хранимых данных</li>
+                        <li>Регулярные аудиты безопасности</li>
+                        <li>Ограниченный доступ к данным</li>
+                    </ul>
+                    <p>Несмотря на наши усилия, ни один метод передачи через интернет или метод электронного хранения не является на 100% безопасным.</p>
+                </div>
+
+                <div class="policy-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Передача данных третьим лицам</h3>
+                    <p>Мы не продаем и не передаем ваши личные данные третьим сторонам, за исключением:</p>
+                    <ul>
+                        <li>Провайдеров услуг, которые помогают нам в работе (хостинг, аналитика)</li>
+                        <li>По требованию закона или в ответ на юридический процесс</li>
+                        <li>Для защиты прав и безопасности наших пользователей и сервиса</li>
+                    </ul>
+                </div>
+
+                <div class="policy-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Ваши права</h3>
+                    <p>Вы имеете право:</p>
+                    <ul>
+                        <li>Запросить доступ к вашим данным</li>
+                        <li>Исправить неточные данные</li>
+                        <li>Удалить ваши данные</li>
+                        <li>Ограничить обработку данных</li>
+                        <li>Получить данные в переносимом формате</li>
+                        <li>Отозвать согласие на обработку</li>
+                    </ul>
+                    <p>Для осуществления этих прав свяжитесь с нами через контактную форму.</p>
+                </div>
+
+                <div class="policy-item mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Изменения в политике</h3>
+                    <p>Мы можем периодически обновлять эту политику. О существенных изменениях мы уведомим вас через сервис или по электронной почте.</p>
+                </div>
+
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Контакты</h3>
+                    <p>Если у вас есть вопросы по поводу этой политики, пожалуйста, свяжитесь с нами:</p>
+                    <p class="mt-2"><strong>Email:</strong> privacy@chatnvoid.com</p>
+                    <p><strong>Почтовый адрес:</strong> г. Москва, ул. Примерная, 123, отдел конфиденциальности</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

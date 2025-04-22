@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель администратора</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .admin-container {
+            display: grid;
+            grid-template-columns: 16rem 1fr;
+            min-height: calc(100vh - 4rem);
+        }
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .user-card:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="admin-container">
+    <!-- Боковое меню -->
+    <aside class="bg-gray-800 text-white p-4 sticky top-16 h-[calc(100vh-4rem)]">
+        <div th:insert="~{admin/fragments/side-menu-left-admin :: sideMenuLeftAdmin}"></div>
+    </aside>
+
+    <!-- Основной контент -->
+    <main class="p-6">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Панель администратора</h1>
+
+            <!-- Статистика -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="stat-card bg-white rounded-xl shadow p-6 text-center">
+                    <h3 class="text-lg font-medium text-gray-500 mb-2">Пользователи</h3>
+                    <p class="text-3xl font-bold text-indigo-600" th:text="${totalUsers}">0</p>
+                </div>
+                <div class="stat-card bg-white rounded-xl shadow p-6 text-center">
+                    <h3 class="text-lg font-medium text-gray-500 mb-2">Посты</h3>
+                    <p class="text-3xl font-bold text-indigo-600">75</p>
+                </div>
+                <div class="stat-card bg-white rounded-xl shadow p-6 text-center">
+                    <h3 class="text-lg font-medium text-gray-500 mb-2">Комментарии</h3>
+                    <p class="text-3xl font-bold text-indigo-600">200</p>
+                </div>
+            </div>
+
+            <!-- Управление пользователями -->
+            <div class="bg-white rounded-xl shadow overflow-hidden">
+                <div class="px-6 py-4 border-b">
+                    <h3 class="text-xl font-semibold text-gray-800">Управление пользователями</h3>
+                    <p class="text-gray-600">Просмотр и управление учетными записями пользователей</p>
+                </div>
+
+                <div class="divide-y divide-gray-200">
+                    <div th:each="user : ${users}" class="user-card px-6 py-4 hover:bg-gray-50 transition-colors duration-150">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-semibold text-gray-800" th:text="${user.username}"></h4>
+                                <p class="text-sm text-gray-600" th:text="${user.email}"></p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs font-medium rounded-full"
+                                      th:text="${user.roles}"></span>
+                                <button class="text-indigo-600 hover:text-indigo-800">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 border-t flex justify-between items-center">
+                    <p class="text-sm text-gray-600">Показано <span th:text="${users.size()}"></span> из <span th:text="${totalUsers}"></span> пользователей</p>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1 bg-gray-200 rounded text-gray-700 text-sm">Назад</button>
+                        <button class="px-3 py-1 bg-indigo-600 rounded text-white text-sm">Вперед</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

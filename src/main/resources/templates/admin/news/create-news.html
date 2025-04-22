@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Создание новости</title>
+</head>
+<body>
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="min-h-screen bg-gray-100 flex">
+    <aside class="bg-gray-200 w-64 p-4">
+        <div th:insert="~{admin/fragments/side-menu-left-admin :: sideMenuLeftAdmin}"></div>
+    </aside>
+    <div class="flex-grow p-6">
+        <h1 class="text-2xl font-semibold mb-6">Создание новости</h1>
+
+        <!-- Сообщения об ошибках/успехе -->
+        <div th:if="${param.success}" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            Новость успешно создана!
+        </div>
+
+        <form th:action="@{/admin/news/create}" th:object="${newsDto}" method="post" class="bg-white p-6 rounded-lg shadow-md">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Заголовок</label>
+                <input type="text" id="title" th:field="*{title}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="content">Содержание</label>
+                <textarea id="content" th:field="*{content}" rows="6"
+                          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-red-500 text-xs"></span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Категория</label>
+                    <select id="category" th:field="*{category}"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="author">Автор</label>
+                    <input type="text" id="author" th:field="*{author}"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+            </div>
+
+            <div class="mb-4 flex items-center">
+                <input type="checkbox" id="important" th:field="*{important}" class="mr-2">
+                <label for="important" class="text-gray-700 text-sm font-bold">Важная новость</label>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Создать новость
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

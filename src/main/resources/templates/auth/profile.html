@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatNvoid - Профиль</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .message-container {
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #f1f1f1;
+        }
+        .message-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .message-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .message-container::-webkit-scrollbar-thumb {
+            background-color: #3b82f6;
+            border-radius: 4px;
+        }
+        .sidebar-item.active {
+            background-color: #eff6ff;
+            border-right: 3px solid #3b82f6;
+        }
+        .user-card {
+            transition: all 0.3s ease;
+        }
+        .user-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<div th:insert="~{fragments/header :: header}"></div>
+
+<!-- Основное содержимое -->
+<div class="container mx-auto p-6">
+    <div class="flex flex-col md:flex-row gap-6">
+        <!-- Боковая панель с информацией о пользователе -->
+        <div class="w-full md:w-1/4 bg-white rounded-lg shadow p-6">
+            <div class="flex flex-col items-center">
+                <div class="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white text-4xl font-bold mb-4"
+                     th:text="${#strings.substring(currentUser, 0, 1).toUpperCase()}"></div>
+                <h2 class="text-xl font-bold" th:text="${currentUser}"></h2>
+                <p class="text-gray-500 mb-4">Online</p>
+
+                <div class="w-full border-t pt-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-600">Email:</span>
+                        <span class="font-medium" th:text="${user.email}"></span>
+                    </div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-600">Зарегистрирован:</span>
+                        <span class="font-medium" th:text="${#temporals.format(user.createdAt, 'dd.MM.yyyy')}"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Статус:</span>
+                        <span class="font-medium text-green-500">Активен</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Боковое меню -->
+            <div th:insert="~{fragments/side-menu-left :: sideMenuLeft}"></div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="w-full md:w-3/4">
+            <!-- Информация о пользователе -->
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Информация о пользователе</h3>
+                <div class="flex flex-col space-y-2">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Имя:</span>
+                        <span class="font-medium" th:text="${user.name}"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Фамилия:</span>
+                        <span class="font-medium" th:text="${user.surname}"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Дата рождения:</span>
+                        <span class="font-medium" th:text="${#temporals.format(user.dateOfBirth, 'dd.MM.yyyy')}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Настройки профиля -->
+            <div class="bg-white rounded-lg shadow p-6 mb-6">
+                <h3 class="text-lg font-semibold mb-4">Настройки профиля</h3>
+                <a href="/settings" class="text-blue-500 hover:underline">Редактировать профиль</a>
+            </div>
+
+            <!-- Последние активности -->
+<!--            <div class="bg-white rounded-lg shadow p-6">-->
+<!--                <h3 class="text-lg font-semibold mb-4 flex items-center">-->
+<!--                    <i class="fas fa-history text-gray-500 mr-2"></i>-->
+<!--                    Последние активности-->
+<!--                </h3>-->
+<!--                <div class="space-y-3">-->
+<!--                    <div th:each="activity : ${recentActivities}"-->
+<!--                         class="flex items-start pb-3 border-b border-gray-100 last:border-0">-->
+<!--                        <div th:class="${activity.type == 'MESSAGE' ? 'bg-blue-100 text-blue-500' : 'bg-gray-100 text-gray-500'}-->
+<!--                                      + ' p-2 rounded-full mr-3'">-->
+<!--                            <i th:class="${activity.type == 'MESSAGE' ? 'fas fa-comment' : 'fas fa-user-plus'}"></i>-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                        <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <p class="font-medium" th:text="${activity.description}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <p class="text-sm text-gray-500" th:text="${#temporals.format(activity.timestamp, 'dd.MM.yyyy HH:mm')}"></p>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div th:if="${recentActivities.empty}" class="text-center text-gray-500 py-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                        Активности не найдены&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</div>
+
+<!-- Мобильное меню -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-3">
+    <a href="/chat" class="text-gray-500 flex flex-col items-center">
+        <i class="fas fa-comment"></i>
+        <span class="text-xs mt-1">Чаты</span>
+    </a>
+    <a href="/contacts" class="text-gray-500 flex flex-col items-center">
+        <i class="fas fa-users"></i>
+        <span class="text-xs mt-1">Контакты</span>
+    </a>
+    <a href="/profile" class="text-blue-500 flex flex-col items-center">
+        <i class="fas fa-user"></i>
+        <span class="text-xs mt-1">Профиль</span>
+    </a>
+    <a href="/settings" class="text-gray-500 flex flex-col items-center">
+        <i class="fas fa-cog"></i>
+        <span class="text-xs mt-1">Настройки</span>
+    </a>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+
+<script>
+    // Инициализация WebSocket для уведомлений
+    const socket = new SockJS('/ws');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function(frame) {
+        console.log('Connected to notifications');
+
+        stompClient.subscribe('/user/queue/notifications', function(message) {
+            const notification = JSON.parse(message.body);
+            showNotification(notification);
+        });
+    });
+
+    function showNotification(notification) {
+        // Реализация показа уведомления
+        console.log('New notification:', notification);
+    }
+</script>
+</body>
+</html>

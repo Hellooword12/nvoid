@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatNvoid - Настройки</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    .settings-card {
+        transition: all 0.3s ease;
+    }
+    .settings-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-item.active {
+        background-color: #eff6ff;
+        border-right: 3px solid #3b82f6;
+    }
+    .theme-preview {
+        width: 100%;
+        height: 80px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+    }
+    .theme-preview.light {
+        background: linear-gradient(135deg, #ffffff 50%, #f3f4f6 50%);
+    }
+    .theme-preview.dark {
+        background: linear-gradient(135deg, #1f2937 50%, #111827 50%);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<div th:insert="~{fragments/header :: header}"></div>
+
+<!-- Основное содержимое -->
+<div class="container mx-auto p-6">
+  <div class="flex flex-col md:flex-row gap-6">
+    <!-- Боковая панель с информацией о пользователе -->
+    <div class="w-full md:w-1/4 bg-white rounded-lg shadow p-6">
+      <div class="flex flex-col items-center">
+        <div class="w-24 h-24 rounded-full bg-blue-500 flex items-center justify-center text-white text-4xl font-bold mb-4"></div>
+<!--             th:text="${#strings.substring(currentUser, 0, 1).toUpperCase()}"></div>-->
+        <h2 class="text-xl font-bold" th:text="${currentUser}"></h2>
+        <p class="text-gray-500 mb-4">Online</p>
+
+        <div class="w-full border-t pt-4">
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-600">Email:</span>
+            <span class="font-medium" th:text="${user.email}"></span>
+          </div>
+          <div class="flex justify-between mb-2">
+            <span class="text-gray-600">Зарегистрирован:</span>
+            <span class="font-medium" th:text="${#temporals.format(user.createdAt, 'dd.MM.yyyy')}"></span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-600">Статус:</span>
+            <span class="font-medium text-green-500">Активен</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Боковое меню настроек -->
+      <div class="mt-6">
+        <h3 class="text-lg font-semibold mb-4">Настройки</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/settings/profile" class="flex items-center p-2 rounded sidebar-item active">
+              <i class="fas fa-user-circle mr-3 text-blue-500"></i>
+              <span>Профиль</span>
+            </a>
+          </li>
+          <li>
+            <a href="/settings/account" class="flex items-center p-2 rounded sidebar-item">
+              <i class="fas fa-cog mr-3 text-gray-500"></i>
+              <span>Аккаунт</span>
+            </a>
+          </li>
+          <li>
+            <a href="/settings/privacy" class="flex items-center p-2 rounded sidebar-item">
+              <i class="fas fa-lock mr-3 text-gray-500"></i>
+              <span>Приватность</span>
+            </a>
+          </li>
+          <li>
+            <a href="/settings/notifications" class="flex items-center p-2 rounded sidebar-item">
+              <i class="fas fa-bell mr-3 text-gray-500"></i>
+              <span>Уведомления</span>
+            </a>
+          </li>
+          <li>
+            <a href="/settings/appearance" class="flex items-center p-2 rounded sidebar-item">
+              <i class="fas fa-paint-brush mr-3 text-gray-500"></i>
+              <span>Оформление</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Основной контент настроек -->
+    <div class="w-full md:w-3/4">
+      <!-- Основные настройки профиля -->
+      <div class="bg-white rounded-lg shadow p-6 mb-6 settings-card">
+        <h3 class="text-lg font-semibold mb-4 flex items-center">
+          <i class="fas fa-user-circle text-blue-500 mr-2"></i>
+          Основные настройки профиля
+        </h3>
+
+        <form th:action="@{/settings/profile}" method="post">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-gray-700 mb-2" for="name">Имя</label>
+              <input type="text" id="name" name="name" class="border border-gray-300 rounded-lg p-2 w-full"
+                     th:value="${user.name}" required>
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2" for="surname">Фамилия</label>
+              <input type="text" id="surname" name="surname" class="border border-gray-300 rounded-lg p-2 w-full"
+                     th:value="${user.surname}" required>
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2" for="dateOfBirth">Дата рождения</label>
+              <input type="date" id="dateOfBirth" name="dateOfBirth" class="border border-gray-300 rounded-lg p-2 w-full"
+                     th:value="${#temporals.format(user.dateOfBirth, 'yyyy-MM-dd')}" required>
+            </div>
+          </div>
+          <div class="mt-6">
+            <button type="submit" class="bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600">
+              Сохранить изменения
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Настройки оформления -->
+      <div class="bg-white rounded-lg shadow p-6 mb-6 settings-card">
+        <h3 class="text-lg font-semibold mb-4 flex items-center">
+          <i class="fas fa-paint-brush text-blue-500 mr-2"></i>
+          Настройки оформления
+        </h3>
+
+        <div class="space-y-4">
+          <h4 class="font-medium">Цветовая тема</h4>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="border-2 rounded-lg p-3 cursor-pointer hover:border-blue-300"
+                 th:classappend="${userSettings?.theme == 'light'} ? 'border-blue-500' : 'border-transparent'"
+                 onclick="updateTheme('light')">
+              <div class="theme-preview light"></div>
+              <div class="text-center font-medium">Светлая</div>
+            </div>
+            <div class="border-2 rounded-lg p-3 cursor-pointer hover:border-blue-300"
+                 th:classappend="${userSettings?.theme == 'dark'} ? 'border-blue-500' : 'border-transparent'"
+                 onclick="updateTheme('dark')">
+              <div class="theme-preview dark"></div>
+              <div class="text-center font-medium">Тёмная</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Настройки уведомлений -->
+      <div class="bg-white rounded-lg shadow p-6 settings-card">
+        <h3 class="text-lg font-semibold mb-4 flex items-center">
+          <i class="fas fa-bell text-blue-500 mr-2"></i>
+          Настройки уведомлений
+        </h3>
+
+        <div class="space-y-4">
+          <div class="flex items-center">
+            <input type="checkbox" id="notifications-enabled" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+<!--                   th:checked="${userSettings?.notificationsEnabled}">-->
+            <label for="notifications-enabled" class="ml-2 block text-sm text-gray-700">
+              Включить уведомления
+            </label>
+          </div>
+
+          <div class="flex items-center">
+            <input type="checkbox" id="email-notifications" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+<!--                   th:checked="${userSettings?.emailNotifications}">-->
+            <label for="email-notifications" class="ml-2 block text-sm text-gray-700">
+              Получать уведомления по email
+            </label>
+          </div>
+
+          <div class="flex items-center">
+            <input type="checkbox" id="sound-notifications" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+<!--                   th:checked="${userSettings?.soundEnabled}">-->
+            <label for="sound-notifications" class="ml-2 block text-sm text-gray-700">
+              Звуковые оповещения
+            </label>
+          </div>
+
+          <div class="pt-2">
+            <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+              <i class="fas fa-save mr-2"></i> Сохранить настройки
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Мобильное меню -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-3">
+  <a href="/chat" class="text-gray-500 flex flex-col items-center">
+    <i class="fas fa-comment"></i>
+    <span class="text-xs mt-1">Чаты</span>
+  </a>
+  <a href="/contacts" class="text-gray-500 flex flex-col items-center">
+    <i class="fas fa-users"></i>
+    <span class="text-xs mt-1">Контакты</span>
+  </a>
+  <a href="/profile" class="text-gray-500 flex flex-col items-center">
+    <i class="fas fa-user"></i>
+    <span class="text-xs mt-1">Профиль</span>
+  </a>
+  <a href="/settings" class="text-blue-500 flex flex-col items-center">
+    <i class="fas fa-cog"></i>
+    <span class="text-xs mt-1">Настройки</span>
+  </a>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+
+<script>
+  function updateTheme(theme) {
+      fetch('/settings/theme', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `theme=${theme}`
+      }).then(response => {
+          if (response.ok) {
+              location.reload();
+          }
+      });
+  }
+</script>
+</body>
+</html>

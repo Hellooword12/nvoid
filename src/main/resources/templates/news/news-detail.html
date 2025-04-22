@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <title th:text="${news.title} + ' - ChatNvoid'">Новость - ChatNvoid</title>-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+<div th:insert="~{fragments/header :: header}"></div>
+
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Хлебные крошки -->
+        <nav class="flex mb-6" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="/" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-home mr-2"></i>
+                        Главная
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+                        <a href="/news" class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">Новости</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <i class="fas fa-chevron-right text-gray-400 mx-2"></i>
+              <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2" th:text="${news.title}"></span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Основное содержимое новости -->
+        <article class="bg-white rounded-lg shadow-md overflow-hidden">
+            <!-- Заголовок и метаданные -->
+            <header class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between mb-4">
+                    <span th:class="${'text-xs font-semibold px-2 py-1 rounded ' +
+                                    (news.category == 'Обновление' ? 'bg-blue-100 text-blue-800' :
+                                     news.category == 'Безопасность' ? 'bg-green-100 text-green-800' :
+                                     news.category == 'Функция' ? 'bg-purple-100 text-purple-800' :
+                                     'bg-yellow-100 text-yellow-800')}"
+                          th:text="${news.category}"></span>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500" th:text="${#temporals.format(news.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                        <span th:if="${news.important}" class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">ВАЖНО</span>
+                    </div>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900" th:text="${news.title}"></h1>
+                <div class="mt-2 flex items-center">
+                    <span class="text-sm text-gray-500">Автор: </span>
+                    <span class="text-sm font-medium text-gray-700 ml-1" th:text="${news.author}"></span>
+                </div>
+            </header>
+
+<!--            &lt;!&ndash; Изображение новости (опционально) &ndash;&gt;-->
+<!--            <div th:if="${news.imageUrl}" class="h-64 bg-gray-200 flex items-center justify-center overflow-hidden">-->
+<!--                <img th:src="${news.imageUrl}" alt="Изображение новости" class="w-full h-full object-cover">-->
+<!--            </div>-->
+<!--            <div th:unless="${news.imageUrl}" class="h-48 bg-gray-100 flex items-center justify-center">-->
+<!--                <i class="fas fa-newspaper text-5xl text-gray-400"></i>-->
+<!--            </div>-->
+
+            <!-- Содержимое новости -->
+            <div class="p-6 prose max-w-none">
+                <p class="text-gray-700 whitespace-pre-line" th:text="${news.content}"></p>
+
+<!--                &lt;!&ndash; Дополнительные блоки, если есть &ndash;&gt;-->
+<!--                <div th:if="${news.additionalContent}" class="mt-6 p-4 bg-gray-50 rounded-lg">-->
+<!--                    <h3 class="font-bold text-lg mb-2">Дополнительная информация</h3>-->
+<!--                    <p class="text-gray-700 whitespace-pre-line" th:text="${news.additionalContent}"></p>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash; Теги (опционально) &ndash;&gt;-->
+<!--            <div th:if="${not #lists.isEmpty(news.tags)}" class="px-6 pb-6">-->
+<!--                <div class="flex flex-wrap gap-2">-->
+<!--                    <span th:each="tag : ${news.tags}"-->
+<!--                          class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">-->
+<!--                        <i class="fas fa-tag mr-1"></i>-->
+<!--                        <span th:text="${tag}"></span>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <!-- Футер статьи -->
+            <footer class="p-6 border-t border-gray-200 flex justify-between items-center">
+                <a href="/news" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                    <i class="fas fa-arrow-left mr-1"></i> Назад к списку новостей
+                </a>
+                <div class="flex space-x-4">
+                    <button class="text-gray-500 hover:text-blue-500">
+                        <i class="far fa-thumbs-up"></i>
+<!--                        <span class="ml-1" th:text="${news.likesCount} ?: '0'"></span>-->
+                    </button>
+                    <button class="text-gray-500 hover:text-blue-500">
+                        <i class="far fa-comment"></i>
+<!--                        <span class="ml-1" th:text="${news.commentsCount} ?: '0'"></span>-->
+                    </button>
+                    <button class="text-gray-500 hover:text-blue-500">
+                        <i class="fas fa-share"></i>
+                    </button>
+                </div>
+            </footer>
+            </div>
+        </article>
+
+        <!-- Комментарии (опционально) th:if="${news.commentsEnabled}" -->
+        <section class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Комментарии</h2>
+
+            <form th:action="@{/comments/{id}/add}" method="post" class="mb-6">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                <div class="mb-4">
+                    <label for="content" class="block text-sm font-medium text-gray-700 mb-2">Ваш комментарий</label>
+                    <textarea id="content" name="content" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Напишите ваш комментарий..." required></textarea>
+                </div>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                    Отправить
+                </button>
+            </form>
+
+            <!-- Список комментариев -->
+            <div id="commentsContainer" class="space-y-4">
+                <!-- Комментарии будут загружаться здесь -->
+            </div>
+        </section>
+
+        <!-- Похожие новости -->
+        <section th:if="${not #lists.isEmpty(relatedNews)}" class="mt-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Похожие новости</h2>
+            <div class="grid gap-4 md:grid-cols-2">
+                <div th:each="related : ${relatedNews}" class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+                    <a th:href="@{/news/{id}(id=${related.id})}" class="block">
+                        <div class="p-4">
+                            <h3 class="text-lg font-medium text-gray-900 mb-1" th:text="${related.title}"></h3>
+                            <p class="text-sm text-gray-500" th:text="${#temporals.format(related.createdAt, 'dd.MM.yyyy')}"></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div th:insert="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<div th:fragment="header">
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition">ChatNvoid</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Для неавторизованных пользователей -->
+                    <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                        <a href="/auth/login"
+                           class="px-4 py-2 text-blue-600 font-medium hover:bg-blue-50 rounded-lg transition">
+                            Вход
+                        </a>
+                        <a href="/auth/register"
+                           class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                            Регистрация
+                        </a>
+                    </div>
+                    <!-- Для авторизованных пользователей -->
+                    <div sec:authorize="hasRole('ADMIN')">
+                        <a href="/admin"
+                           class="px-4 py-2 text-blue-600 font-medium hover:bg-blue-50 rounded-lg transition">
+                            Админка
+                        </a>
+                    </div>
+                    <div th:if="${#authorization.expression('isAuthenticated()')}" class="flex items-center space-x-4">
+                        <span class="text-gray-700" sec:authentication="name"></span>
+                        <a href="/chat"
+                           class="px-4 py-2 text-blue-600 font-medium hover:bg-blue-50 rounded-lg transition">
+                            Мой чат
+                        </a>
+                        <a href="/profile"
+                           class="px-4 py-2 text-blue-600 font-medium hover:bg-blue-50 rounded-lg transition">
+                            Профиль
+                        </a>
+                        <a href="/auth/logout"
+                           class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition">
+                            Выйти
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
