@@ -1,6 +1,6 @@
 # Nvoid - Веб-чат с современными технологиями
 
-**Официальный сайт:** [https://nvoid.ru](https://nvoid.ru)  
+**Официальный сайт:** [http://nvoid.ru](http://nvoid.ru)  
 [![Java Version](https://img.shields.io/badge/Java-21-blue)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.1-green)](https://spring.io/projects/spring-boot)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-orange)](https://www.mysql.com/)
